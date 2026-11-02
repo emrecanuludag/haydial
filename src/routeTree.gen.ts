@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AydinlatmaRouteImport } from './routes/aydinlatma'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AydinlatmaRoute = AydinlatmaRouteImport.update({
+  id: '/aydinlatma',
+  path: '/aydinlatma',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aydinlatma': typeof AydinlatmaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aydinlatma': typeof AydinlatmaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aydinlatma': typeof AydinlatmaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/aydinlatma'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/aydinlatma'
+  id: '__root__' | '/' | '/aydinlatma'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AydinlatmaRoute: typeof AydinlatmaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/aydinlatma': {
+      id: '/aydinlatma'
+      path: '/aydinlatma'
+      fullPath: '/aydinlatma'
+      preLoaderRoute: typeof AydinlatmaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AydinlatmaRoute: AydinlatmaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

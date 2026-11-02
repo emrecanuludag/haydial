@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
-import { z } from "zod";
 import {
   Timer, Ticket, SlidersHorizontal, BadgePercent, CalendarDays, LineChart, Filter,
   PencilLine, Scale, CheckCircle2, Baby, Clock, Star, ShieldCheck,
 } from "lucide-react";
+
+import { Waitlist } from "@/components/waitlist";
 
 const TITLE = "Haydial · Akıllı alışveriş asistanı";
 const DESC = "Listeni yaz, gerisini Haydial halletsin. Online marketleri karşılaştırıp zamanını ve bütçeni koruyan en akıllı sepeti kuran yapay zekâ asistanı.";
@@ -44,34 +44,6 @@ const audience = [
   { icon: Clock, t: "Zamanı kıymetli olanlar", d: "Uygulamaları tek tek gezmek yerine tek listeyle bitir." },
   { icon: Star, t: "Markaya ve kaliteye önem verenler", d: "En ucuzu değil, senin istediğini bulur." },
 ];
-
-const emailSchema = z.string().trim().email().max(255);
-
-function Waitlist() {
-  const [email, setEmail] = useState("");
-  const [done, setDone] = useState(false);
-  const [error, setError] = useState("");
-  const submit = (e: FormEvent) => {
-    e.preventDefault();
-    if (!emailSchema.safeParse(email).success) return setError("Lütfen geçerli bir e-posta adresi gir.");
-    setError("");
-    setDone(true);
-  };
-  if (done) return <p className="rounded-xl bg-brand-soft px-5 py-4 text-sm font-medium">Teşekkürler! Erken erişim açıldığında ilk sen haberdar olacaksın.</p>;
-  return (
-    <form onSubmit={submit} className="w-full">
-      <div className="flex flex-col gap-2 sm:flex-row">
-        <input type="email" required maxLength={255} value={email} onChange={(e) => setEmail(e.target.value)}
-          placeholder="eposta@adresin.com" aria-label="E-posta adresi"
-          className="min-w-0 flex-1 rounded-full border border-border bg-background px-5 py-3 text-sm outline-none focus:border-brand" />
-        <button type="submit" className="rounded-full bg-brand px-6 py-3 text-sm font-semibold text-brand-foreground transition-opacity hover:opacity-90">
-          Listeye katıl
-        </button>
-      </div>
-      {error && <p className="mt-2 text-xs text-destructive">{error}</p>}
-    </form>
-  );
-}
 
 function Phone() {
   const items = [
@@ -190,7 +162,7 @@ function Index() {
 
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 px-6 py-8 text-sm text-muted-foreground sm:flex-row sm:justify-between">
-          <span>© 2026 Haydial · Taslak sürüm</span>
+          <span>© 2026 Haydial · Taslak sürüm · <a href="/aydinlatma" className="underline underline-offset-2 hover:text-foreground">KVKK Aydınlatma Metni</a></span>
           <span>İletişim: merhaba@haydial.ai</span>
         </div>
       </footer>

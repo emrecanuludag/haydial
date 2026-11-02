@@ -24,3 +24,14 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Bekleme listesi
+
+Formun altında `/aydinlatma` sayfasına bağlantı var. Metin `psikiyatri.pro/pro/kvkk` aydınlatma metninden uyarlandı.
+
+Form, e-postayı sunucu tarafından bir webhook'a iletir ve yalnızca webhook 2xx dönerse teşekkür gösterir. Yayındaki ortamda şu değişkenler tanımlı olmalıdır:
+
+- `WAITLIST_WEBHOOK_URL`: `{ email, source, createdAt }` JSON gövdesini POST ile alan adres. Üretimde `https://luminda.pro/api/haydial/waitlist`; kayıtlar brain-ops'ta `/docker/haydial/waitlist/waitlist.db`.
+- `WAITLIST_WEBHOOK_SECRET` (isteğe bağlı): `Authorization: Bearer ...` olarak gönderilir.
+
+`WAITLIST_WEBHOOK_URL` tanımlı değilse form hata gösterir ve e-posta kaydedilmez.
